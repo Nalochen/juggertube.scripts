@@ -1,20 +1,26 @@
-import xml.etree.ElementTree as ET
+import logging
 
-import requests
+from sqlalchemy import create_engine
+from telegram.ext import ApplicationBuilder, CommandHandler, filters, MessageHandler
+from telegramBot import start, unknown
+
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO
+)
+
+engine = create_engine("sqlite://", echo=True)
 
 
 def main():
-    response = requests.get('https://forum.jugger.org/app.php/feed')
-    forum_xml = response.text
+    application = ApplicationBuilder().token('7486129110:AAEken4HTskhf5h6YltKI2fVVqXhhiIl3Cs').build()
+    start_handler = CommandHandler('start', start)
+    unknown_handler = MessageHandler(filters.COMMAND, unknown)
 
-    tree = ET.fromstring(forum_xml)
+    application.add_handler(start_handler)
+    application.add_handler(unknown_handler)
 
-    entries = []
-
-    for entry in tree.findall('{http://www.w3.org/2005/Atom}entry'):
-        print(entry.tag, entry.text, entry.attrib)
-        published = entry.find('{http://www.w3.org/2005/Atom}published')
-        print(published)
+    application.run_polling()
 
 
 if __name__ == '__main__':
