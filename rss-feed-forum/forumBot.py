@@ -3,7 +3,7 @@ import requests
 from post import Post
 
 
-def getForumPosts():
+def get_forum_posts():
     response = requests.get('https://forum.jugger.org/app.php/feed')
     forum_xml = response.text
 
@@ -21,7 +21,7 @@ def getForumPosts():
             '{http://www.w3.org/2005/Atom}title')
         content = entry.find('{http://www.w3.org/2005/Atom}content')
 
-        current_post = Post(link=post_id, author=author_name, title=title, content=content, published=published, updated=updated)
+        current_post = Post(link=post_id.text, author=author_name.text, title=title.text, content=content.text, published=published.text, updated=updated.text)
         last_entries.append(current_post)
 
     return last_entries

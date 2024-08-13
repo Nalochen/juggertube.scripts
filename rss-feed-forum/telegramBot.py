@@ -15,8 +15,11 @@ async def unknown(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=update.effective_chat.id, text="Sorry, I didn't understand that command.")
 
 
-def send_new_posts(context: ContextTypes.DEFAULT_TYPE, posts):
+async def send_new_posts(application, posts):
     users = get_all_users_from_database()
     for user in users:
         for post in posts:
-            await context.bot.send_message(chat_id=user.id, text=f"{post.author} added a new Post in {post.link}!\n {post.title}\n {post.content}\n published{post.published}")
+            try:
+                await application.bot.send_message(chat_id=user.id, text=f"{post.author} added a new Post in {post.link}!\n{post.title}\npublished: {post.published}")
+            except Exception as e:
+                print(str(e))

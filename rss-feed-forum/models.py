@@ -1,5 +1,12 @@
-from sqlalchemy import Text, String, DateTime, Integer, Column
+from sqlalchemy import Text, String, DateTime, Integer, Column, create_engine, MetaData, Table
+from sqlalchemy_utils import database_exists, create_database
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+
+user = 'juggertubeScripts'
+password = 'juggertube'
+host = 'localhost'
+database = 'JuggerTubeScripts'
 
 Base = declarative_base()
 
@@ -31,3 +38,11 @@ class Post(Base):
     def __repr__(self):
         return f"Post(id={self.id!r}, author={self.author!r}, link={self.link!r}, title={self.title!r}, " \
                f"content={self.content!r}, published={self.published!r}, updated={self.updated!r}, )"
+
+
+engine = create_engine(f"mysql+mysqlconnector://{user}:{password}@{host}/{database}")
+if not database_exists(engine.url):
+    create_database(engine.url)
+
+Base.metadata.create_all(engine)
+Session = sessionmaker(bind=engine)

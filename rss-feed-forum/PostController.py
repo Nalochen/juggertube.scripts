@@ -1,9 +1,10 @@
 from models import Post
 from datetime import datetime
 from sqlalchemy.orm import Session
+from models import engine
 
 
-def add_new_posts_to_database(posts, engine):
+def add_new_posts_to_database(posts):
     new_posts = []
     for post in posts:
         existing_post = Post.query.filter_by(link=post.link)
