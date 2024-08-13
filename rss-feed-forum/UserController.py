@@ -1,5 +1,6 @@
-from models import User, engine
+from models import User
 from sqlalchemy.orm import Session
+from setupDatabase import engine
 
 
 def save_new_user_to_database(user_id, user_name):
