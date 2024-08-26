@@ -4,7 +4,7 @@ import logging
 from telegram.ext import ApplicationBuilder
 from telegramBot import send_new_posts
 from forumBot import get_forum_posts
-from PostController import add_new_posts_to_database
+from PostController import add_new_posts_to_file
 from setupDatabase import setup_database
 
 logging.basicConfig(
@@ -20,7 +20,7 @@ async def main():
     await application.initialize()
 
     new_posts = get_forum_posts()
-    await send_new_posts(application, add_new_posts_to_database(new_posts))
+    await send_new_posts(application, add_new_posts_to_file(new_posts))
 
     polling_task = asyncio.create_task(application.start())
 

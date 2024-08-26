@@ -2,11 +2,20 @@ from models import Post
 from datetime import datetime
 from sqlalchemy.orm import Session
 from setupDatabase import engine
+import json
 
 
-def add_new_posts_to_database(posts):
+def add_new_posts_to_file(posts):
     with Session(engine) as session:
         new_posts = []
+        with open('forum-posts.json') as json_file:
+            data = json.load(json_file)
+
+        # check if post is already in file
+        # else write data in file
+        # how is data written?
+        # how is data read?
+
         for post in posts:
             existing_post = session.query(Post).filter_by(link=post.link).first()
             if existing_post:
