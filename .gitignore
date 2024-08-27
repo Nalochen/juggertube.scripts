@@ -10,3 +10,5 @@
 /youtube-videos/YoutubeVideos.txt
 /youtube-videos/YoutubeVideosOtherNaming.txt
 /.venv/
+/rss-feed-forum/forum-posts.json
+/rss-feed-forum/telegramIds.json
