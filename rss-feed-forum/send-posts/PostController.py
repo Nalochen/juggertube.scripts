@@ -35,7 +35,6 @@ def serialize_posts(post):
         'author': post.author,
         'title': post.title,
         'category': post.category,
-        'content': post.content,
         'published': post.published,
         'updated': post.published
     }

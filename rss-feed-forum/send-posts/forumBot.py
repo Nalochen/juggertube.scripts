@@ -19,12 +19,12 @@ def get_forum_posts():
         post_id = entry.find('{http://www.w3.org/2005/Atom}id')
         category_title = entry.find('{http://www.w3.org/2005/Atom}title')
         category_title_list = category_title.text.split(' • ')
-        content = entry.find('{http://www.w3.org/2005/Atom}content')
 
         category = category_title_list[0]
         title = category_title_list[1]
 
-        current_post = Post(link=post_id.text, author=author_name.text, title=title, content=content.text, published=published.text, updated=updated.text, category=category)
+        current_post = Post(link=post_id.text, author=author_name.text, title=title, published=published.text,
+                            updated=updated.text, category=category)
         last_entries.append(current_post)
 
     return last_entries

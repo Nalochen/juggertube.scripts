@@ -1,6 +1,6 @@
 from telegram import Update
 from telegram.ext import ContextTypes
-from userController import save_users_to_json
+from userController import save_users_to_json, delete_user_from_json
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -18,18 +18,18 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def all_posts(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_chat.id
     user_name = update.effective_chat.username
-    save_users_to_json(user_id, user_name, "all")
-    await context.bot.send_message(chat_id=update.effective_chat.id, text=f"Congratulations! You just subscribed to "
-                                                                          f"the Jugger Forum Newsletter and get a "
-                                                                          f"message every time a new post was added")
+    message = save_users_to_json(user_id, user_name, "all")
+    await context.bot.send_message(chat_id=update.effective_chat.id, text=message)
 
 
 async def qualification(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_chat.id
     user_name = update.effective_chat.username
-    save_users_to_json(user_id, user_name, "qualification")
-    await context.bot.send_message(chat_id=update.effective_chat.id, text=f"Congratulations! You just subscribed to "
-                                                                          f"the Jugger Forum Newsletter and get a "
-                                                                          f"message every time a new post in the "
-                                                                          f"Category 'Qualifiaktion und Liga' was "
-                                                                          f"added")
+    message = save_users_to_json(user_id, user_name, "qualification")
+    await context.bot.send_message(chat_id=update.effective_chat.id, text=message)
+
+
+async def unsubscribe(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.effective_chat.id
+    message = delete_user_from_json(user_id)
+    await context.bot.send_message(chat_id=update.effective_chat.id, text=message)
