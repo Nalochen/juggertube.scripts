@@ -64,8 +64,9 @@ def delete_user_from_json(user_id):
     with open(get_parent()) as file:
         file_users = json.load(file)
         for user in file_users:
-            if user[userId] == user_id:
-                del file_users[user]
-                return f"user {user.user_name} unsubscribed"
+            if user['userId'] == user_id:
+                index = list(file_users).index(user)
+                del file_users[index]
+                return f"user {user['userName']} unsubscribed"
             else:
-                return f"user {user.user_name} not found"
+                return f"user {user['userName']} not found"
