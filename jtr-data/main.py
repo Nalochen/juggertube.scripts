@@ -38,11 +38,19 @@ def main():
         tournaments.append(tournament)
 
     outfile = open('tournaments.json', 'w', encoding="utf-8")
-    for tournament in overview_parser.tournament_array:
+    first_line = ('{"tournaments": [' + "\n")
+    outfile.write(first_line)
+    for tournament in overview_parser.tournament_array[:-1]:
         line = ('{"id": "' + tournament.tournament_id + '", "name": "' + tournament.name + '", "start_date": "' +
                 tournament.start_date + '", "end_date": "' + tournament.end_date + '", "city": "' +
                 tournament.city + '", "country": "' + tournament.country + '"},\n')
         outfile.write(line)
+    last_tournament = ('{"id": "' + tournaments[-1].tournament_id + '", "name": "' + tournaments[-1].name + '", "start_date": "' +
+                tournaments[-1].start_date + '", "end_date": "' + tournaments[-1].end_date + '", "city": "' +
+                tournaments[-1].city + '", "country": "' + tournaments[-1].country + '"}\n')
+    outfile.write(last_tournament)
+    last_line = ']}'
+    outfile.write(last_line)
 
 
 if __name__ == '__main__':

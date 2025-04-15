@@ -98,7 +98,6 @@ def main(channel_id_blub):
         if video_name.find(' (') > -1 and video_name.find(') [Jugger]') > -1:
             video_tournament = video_name.split(' (')[1].split(') [Jugger]')[0]
 
-        print(video_team_one, video_team_two, video_tournament)
         if video_team_two and video_team_one and video_tournament:
             video = Video(
                 name=video_title,
@@ -118,13 +117,23 @@ def main(channel_id_blub):
     # open file
     out_file = open(f"{channel_id_blub}.json", "w", encoding="utf-8")
     # Print the extracted video URLs
-    for video in videos:
+    first_line = ('{"videos": [' + "\n")
+    out_file.write(first_line)
+    for video in videos[:-1]:
         line = ('{"name": "' + video.name + '", "category": "' + video.category + '", "channel": "' + video.channel +
                 '", "game_system": "' + video.game_system +
                 '", "link": "' + video.link + '", "team_one": "' + video.team_one + '", "team_two": "' +
                 video.team_two + '", "tournament": "' + video.tournament + '", "upload_date": "' + video.upload_date +
                 '"},' + "\n")
         out_file.write(line)
+    last_video = ('{"name": "' + videos[-1].name + '", "category": "' + videos[-1].category + '", "channel": "' + videos[-1].channel +
+            '", "game_system": "' + videos[-1].game_system +
+            '", "link": "' + videos[-1].link + '", "team_one": "' + videos[-1].team_one + '", "team_two": "' +
+            videos[-1].team_two + '", "tournament": "' + videos[-1].tournament + '", "upload_date": "' + videos[-1].upload_date +
+            '"}' + "\n")
+    out_file.write(last_video)
+    last_line = ']}'
+    out_file.write(last_line)
 
     # open file
     out_file = open(f"{channel_id_blub}OtherNaming.txt", "w", encoding="utf-8")
